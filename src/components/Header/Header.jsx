@@ -1,12 +1,15 @@
 import "./Header.scss";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <div className="header">
       <div className="header-1">
         <div className="header-left">
-          <h1 className="logo">DevTinder</h1>
-          <span className="material-symbols-outlined">local_fire_department</span>
+          <Link to={"/"} className="header-left-link">
+            <h1 className="logo">DevTinder</h1>
+            <span className="material-symbols-outlined">polyline</span>
+          </Link>
         </div>
         <div className="header-right">
           <img
