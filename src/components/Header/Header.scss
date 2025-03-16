@@ -1,0 +1,50 @@
+$primary-color-1: #42a5f5;
+$primary-color-2: #90CAF9;
+$primary-bg-1: #101316;
+
+.header-1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid white;
+    // backdrop-filter: blur(20px);
+    background: rgb(193, 26, 149);
+    background: linear-gradient(90deg, rgba(193, 26, 149, 1) 0%, rgba(218, 31, 9, 1) 35%, rgba(237, 199, 18, 1) 100%);
+    padding: .5rem 1rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+
+    h1 {
+        
+    }
+
+    span {
+        font-size: 2rem;
+        
+    }
+}
+
+.header-right {
+    img {
+        height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+.header-2 {
+    height: 4.5rem;
+    width: 100%;
+}

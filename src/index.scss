@@ -1,5 +1,9 @@
+$primary-color-1: #42a5f5;
+$primary-color-2: #90CAF9;
+$primary-bg-1: #101316;
+
 body {
-    background-color: #202020;
+    background-color: $primary-bg-1;
     color: white;
 }
 
@@ -8,4 +12,8 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: "Graphik";
+}
+
+a {
+    text-decoration: none;
 }
