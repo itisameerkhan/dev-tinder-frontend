@@ -1,8 +1,10 @@
 import "./Login.scss";
 import { Link } from "react-router-dom";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../utils/userSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +13,22 @@ const Login = () => {
     password: "Password@123",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [snackBar, setSnackBar] = useState({
+    open: false,
+    message: "i love coding",
+  });
+
+  const dispatch = useDispatch();
+
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBar({
+      ...snackBar,
+      open: false,
+    });
+  };
 
   const userDataChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -19,8 +37,18 @@ const Login = () => {
   const submitFunction = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.post("http://localhost:8080/api/login", user);
+      const res = await axios.post("http://localhost:8080/api/login", user, {
+        withCredentials: true,
+      });
       console.log(res.data);
+      if (res.data.success) {
+        dispatch(addUser(res.data.data));
+      } else {
+        setSnackBar({
+          open: true,
+          message: res.data.message,
+        });
+      }
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
@@ -55,10 +83,19 @@ const Login = () => {
         >
           {showPassword ? "hide password" : "show password"}
         </p>
-        <button onClick={submitFunction} style={{cursor: isLoading ? "not-allowed" : "pointer"}}>
+        <button
+          onClick={submitFunction}
+          style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
+        >
           {isLoading ? <div className="spinner-loader-1"></div> : "Login"}
         </button>
       </div>
+      <Snackbar
+        open={snackBar.open}
+        message={snackBar.message}
+        onClose={handleSnackBarClose}
+        autoHideDuration={5000}
+      />
     </div>
   );
 };

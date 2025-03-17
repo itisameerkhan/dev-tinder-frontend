@@ -6,6 +6,8 @@ import Main from "./components/Main/Main.jsx";
 import Error from "./components/Error/Error.jsx";
 import Body from "./components/Body/Body.jsx";
 import Login from "./components/Login/Login.jsx";
+import appStore from "./utils/appStore.js";
+import { Provider } from "react-redux";
 
 const appRouter = createBrowserRouter([
   {
@@ -22,13 +24,15 @@ const appRouter = createBrowserRouter([
         element: <Main />,
       },
       {
-        path:"/login",
-        element:<Login />
-      }
+        path: "/login",
+        element: <Login />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <RouterProvider router={appRouter} />
+  <Provider store={appStore}>
+    <RouterProvider router={appRouter} />
+  </Provider>
 );
