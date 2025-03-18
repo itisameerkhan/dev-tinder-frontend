@@ -1,0 +1,17 @@
+.feed-main-1 {
+    margin: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap:2rem;
+    align-items: center;
+    justify-content: center;
+}
+.feed-main {
+    img {
+        height: 20rem;
+        width: 20rem;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+    }
+}

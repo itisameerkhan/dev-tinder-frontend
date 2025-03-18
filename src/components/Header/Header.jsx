@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { BASE_URL } from "../../utils/constants";
 import { removeUser } from "../../utils/userSlice";
+import { removeFeed } from "../../utils/feedSlice";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
@@ -25,6 +26,7 @@ const Header = () => {
     );
 
     dispatch(removeUser());
+    dispatch(removeFeed());
     navigate("/login");
   };
 
