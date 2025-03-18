@@ -6,6 +6,7 @@ import { addFeed } from "../../utils/feedSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Loader/Loader";
+import UserCard from "../UserCard/UserCard";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -31,20 +32,14 @@ const Feed = () => {
     }
   }, []);
 
-  if(!feed) {
-    return <Loader />
+  if (!feed) {
+    return <Loader />;
   }
-  
 
   return (
     <div className="feed">
-      <h1>Feed</h1>
       <div className="feed-main-1">
-      {feed && feed.map((data) => (
-        <div className="feed-main" key={data.id}>
-          <img src={data.photoURL} alt="img" />
-        </div>
-      ))}
+        {feed && feed.map((data) => <UserCard data={data} key={data._id} />)}
       </div>
     </div>
   );

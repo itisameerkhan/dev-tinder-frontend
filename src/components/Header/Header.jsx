@@ -43,7 +43,7 @@ const Header = () => {
           <div className="header-right">
             <p className="h-r-1">
               Welcome,
-              {user.firstName}
+              {" " + user.firstName}
             </p>
             <div className="nav-img">
               <img src={user.photoURL} alt="profile-pic" className="h-img-1" />
