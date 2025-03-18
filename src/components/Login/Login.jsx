@@ -5,6 +5,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../utils/constants";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +21,7 @@ const Login = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSnackBarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -37,12 +40,14 @@ const Login = () => {
   const submitFunction = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.post("http://localhost:8080/api/login", user, {
+      const res = await axios.post(BASE_URL + "/api/login", user, {
         withCredentials: true,
       });
+      
       console.log(res.data);
       if (res.data.success) {
         dispatch(addUser(res.data.data));
+        navigate("/");
       } else {
         setSnackBar({
           open: true,

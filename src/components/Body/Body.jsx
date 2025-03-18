@@ -1,3 +1,4 @@
+import Feed from "../Feed/Feed";
 import "./Body.scss";
 import { Link } from "react-router-dom";
 
@@ -5,9 +6,9 @@ const Body = () => {
   return (
     <div className="body">
       <h1>body</h1>
-      <Link to={"/main"}>
+      <Link to={"/profile"}>
         <button>
-          <h2>main</h2>
+          <h2>profile</h2>
         </button>
       </Link>
       <Link to={"/invalid"}>
@@ -20,6 +21,7 @@ const Body = () => {
           <h2>login</h2>
         </button>
       </Link>
+      <Feed />
     </div>
   );
 };
