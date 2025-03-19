@@ -5,13 +5,13 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/constants";
 import { removeUser } from "../../utils/userSlice";
 import { removeFeed } from "../../utils/feedSlice";
+import { removeConnections } from "../../utils/connectionSlice";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const pathBoolean =
     location.pathname != "/login" && location.pathname != "/signup";
@@ -27,6 +27,7 @@ const Header = () => {
 
     dispatch(removeUser());
     dispatch(removeFeed());
+    dispatch(removeConnections());
     navigate("/login");
   };
 
@@ -52,6 +53,12 @@ const Header = () => {
                   <p>
                     <i className="fa-solid fa-user"></i>
                     profile
+                  </p>
+                </Link>
+                <Link to={"/connections"}>
+                  <p>
+                    <i className="fa-solid fa-users"></i>
+                    Connections
                   </p>
                 </Link>
                 <a onClick={handleLogout}>

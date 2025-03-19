@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Profile.scss";
 import Loader from "../Loader/Loader";
 import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, LinearProgress, Snackbar } from "@mui/material";
 import axios from "axios";
 import { BASE_URL } from "../../utils/constants";
 import { addUser } from "../../utils/userSlice";
@@ -12,25 +12,63 @@ const Profile = () => {
   const [isEdit, setIsEdit] = useState(true);
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [snackBar, setSnackBar] = useState({
+    open: false,
+    message: "i love coding",
+  });
+
+  const handleSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackBar({
+      ...snackBar,
+      open: false,
+    });
+  };
 
   const handleButton = async () => {
-    const { firstName, lastName, phoneNumber, age, gender, about, photoURL } =
-      user;
-      
-    if (!isEdit) {
-      const res = await axios.patch(
-        BASE_URL + "/api/edit/profile",
-        { firstName, lastName, phoneNumber, age, gender, about, photoURL },
-        {
-          withCredentials: true,
+    try {
+      const { firstName, lastName, phoneNumber, age, gender, about, photoURL } =
+        user;
+
+      if (!isEdit) {
+        setIsLoading(true);
+        const res = await axios.patch(
+          BASE_URL + "/api/edit/profile",
+          { firstName, lastName, phoneNumber, age, gender, about, photoURL },
+          {
+            withCredentials: true,
+          }
+        );
+        if (res.data.success) {
+          dispatch(addUser(user));
+          setIsEdit(!isEdit);
+          setIsLoading(false);
+          setSnackBar({
+            open: true,
+            message: res.data.message,
+          });
+        } else {
+          setIsEdit(!isEdit);
+          setIsLoading(false);
+          setSnackBar({
+            open: true,
+            message: res.data.message,
+          });
         }
-      );
+      } else {
+        setIsEdit(!isEdit);
+      }
+    } catch (e) {
+      setIsLoading(false);
+      console.log(e.response.data);
 
-      dispatch(addUser(user));
-
-      setIsEdit(!isEdit);
-    } else {
-      setIsEdit(!isEdit);
+      setSnackBar({
+        open: true,
+        message: e.response.data.message,
+      });
     }
   };
 
@@ -52,6 +90,7 @@ const Profile = () => {
   return (
     <div className="profile">
       <div className="profile-main">
+        {isLoading && <LinearProgress className="p-m-load" />}
         <div className="p-m-1">
           <img src={user?.photoURL} alt="photo" />
           <Button
@@ -108,13 +147,20 @@ const Profile = () => {
             </div>
             <div className="p-m-l">
               <label>Gender</label>
-              <input
-                type="text"
-                value={user.gender}
-                readOnly={isEdit}
-                name="gender"
-                onChange={handleChange}
-              />
+              {isEdit ? (
+                <input type="text" value={user.gender} name="gender" readOnly />
+              ) : (
+                <select
+                  name="gender"
+                  className="p-m-l-s"
+                  value={user.gender}
+                  onChange={handleChange}
+                  readOnly={isEdit}
+                >
+                  <option value="male">male</option>
+                  <option value="female">female</option>
+                </select>
+              )}
             </div>
           </div>
           <div className="p-m-2-1">
@@ -153,6 +199,12 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Snackbar
+        open={snackBar.open}
+        message={snackBar.message}
+        onClose={handleSnackBarClose}
+        autoHideDuration={5000}
+      />
     </div>
   );
 };

@@ -7,7 +7,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    padding: 1rem 4rem;
+    margin-top: 1rem;
 
     img {
         height: 10rem;
@@ -19,9 +20,7 @@
 }
 
 .profile-main {
-    margin: 2rem;
     width: 100%;
-    ;
 }
 
 .p-m-2 {
@@ -29,7 +28,7 @@
     flex-direction: column;
     width: 100%;
     gap: 1.5rem;
-    padding: 1rem 2rem;
+    padding: 2rem 4rem;
 
     p {
         font-size: 2rem;
@@ -69,4 +68,15 @@
         align-items: center;
         justify-content:center;
     }
+}
+.p-m-l-s {
+    height:2.5rem;
+    border:none;
+    outline:none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    padding: 0rem .7rem;
+}
+.p-m-load {
+    // width: 100vw;
 }

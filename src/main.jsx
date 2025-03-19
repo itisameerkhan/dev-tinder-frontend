@@ -8,6 +8,7 @@ import Login from "./components/Login/Login.jsx";
 import appStore from "./utils/appStore.js";
 import { Provider } from "react-redux";
 import Profile from "./components/Profile/Profile.jsx";
+import Connections from "./components/Connections/Connections.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/connections",
+        element: <Connections />,
       },
     ],
   },
