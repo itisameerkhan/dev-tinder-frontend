@@ -24,14 +24,17 @@ const Connections = () => {
   };
 
   useEffect(() => {
-    {
-      !connections && fetchConnections();
-    }
+    fetchConnections();
   }, []);
 
   if (!connections) return <Loader />;
 
-  if (connections.length === 0) return <h1>No connections were found</h1>;
+  if (connections.length === 0) return (
+    <div className="no-connection">
+      <h1>no connection were found</h1>
+      <img src="https://static.vecteezy.com/system/resources/thumbnails/021/975/488/small/search-not-found-3d-render-icon-illustration-with-transparent-background-empty-state-png.png" alt="img" />
+    </div>
+  );
 
   return (
     <div className="connections">

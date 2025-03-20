@@ -3,6 +3,7 @@
     flex-direction: column;
     margin: 3rem;
 }
+
 .connection-cards {
     display: flex;
     align-items: center;
@@ -10,4 +11,11 @@
     flex-direction: column;
     margin: 2rem;
     gap: 1rem;
+}
+.no-connection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
 }

@@ -61,6 +61,12 @@ const Header = () => {
                     Connections
                   </p>
                 </Link>
+                <Link to={"/requests"}>
+                  <p>
+                    <i className="fa-solid fa-envelope"></i>
+                    Requests
+                  </p>
+                </Link>
                 <a onClick={handleLogout}>
                   <p>
                     <i className="fa-solid fa-right-from-bracket"></i>
