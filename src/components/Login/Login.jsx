@@ -11,14 +11,18 @@ import { BASE_URL } from "../../utils/constants";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
-    emailId: "ameerkhan@example.com",
-    password: "Password@123",
+    emailId: "",
+    password: "",
+    firstName: "",
+    lastName: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [snackBar, setSnackBar] = useState({
     open: false,
     message: "i love coding",
   });
+
+  const [isLogin, setIsLogin] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,13 +41,17 @@ const Login = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const submitFunction = async () => {
+  const handleLogin = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.post(BASE_URL + "/api/login", user, {
-        withCredentials: true,
-      });
-      
+      const res = await axios.post(
+        BASE_URL + "/api/login",
+        { emailId: user.emailId, password: user.password },
+        {
+          withCredentials: true,
+        }
+      );
+
       console.log(res.data);
       if (res.data.success) {
         dispatch(addUser(res.data.data));
@@ -60,10 +68,68 @@ const Login = () => {
     }
   };
 
+  const handleSignup = async () => {
+    try {
+      setIsLoading(true);
+      console.log(user);
+
+      const res = await axios.post(
+        BASE_URL + "/api/user/new",
+        {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          emailId: user.emailId,
+          password: user.password,
+        },
+        { withCredentials: true }
+      );
+
+      console.log(res);
+
+      if (res.data.success) {
+        dispatch(addUser(res.data.data));
+        navigate("/profile");
+      } else {
+        setSnackBar({
+          open: true,
+          message: res.data.message,
+        });
+      }
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      setSnackBar({
+        open: true,
+        message: e.response.data.message,
+      });
+    }
+  };
   return (
     <div className="login">
       <div className="login-main">
-        <h1>login</h1>
+        <h1>{isLogin ? "login" : "Sign Up"}</h1>
+        {!isLogin && (
+          <TextField
+            id="outlined-basic"
+            label="First Name"
+            variant="outlined"
+            type="text"
+            name="firstName"
+            value={user.firstName}
+            onChange={userDataChange}
+          />
+        )}{" "}
+        {!isLogin && (
+          <TextField
+            id="outlined-basic"
+            label="Last Name"
+            variant="outlined"
+            type="text"
+            name="lastName"
+            value={user.lastName}
+            onChange={userDataChange}
+          />
+        )}
         <TextField
           id="outlined-basic"
           label="Email"
@@ -82,14 +148,19 @@ const Login = () => {
           value={user.password}
           onChange={userDataChange}
         />
-        <p
-          className="show-password-btn"
-          onClick={() => setShowPassword(!showPassword)}
-        >
-          {showPassword ? "hide password" : "show password"}
-        </p>
+        <div className="login-p">
+          <p
+            className="show-password-btn"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "hide password" : "show password"}
+          </p>
+          <p className="nu-p" onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? "new user? signup" : "already having account? login"}
+          </p>
+        </div>
         <button
-          onClick={submitFunction}
+          onClick={isLogin ? handleLogin : handleSignup}
           style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
         >
           {isLoading ? <div className="spinner-loader-1"></div> : "Login"}
