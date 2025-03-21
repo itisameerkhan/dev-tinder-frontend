@@ -15,3 +15,20 @@
         border-radius: 10px;
     }
 }
+.feed-empty-main {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.feed-empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    img {
+        height:10rem;
+    }
+}

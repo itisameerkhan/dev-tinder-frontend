@@ -36,10 +36,24 @@ const Feed = () => {
     return <Loader />;
   }
 
+  if (feed.length === 0)
+    return (
+      <div className="feed-empty-main">
+        <div className="feed-empty">
+          <img
+            src="https://cdni.iconscout.com/illustration/premium/thumb/no-search-found-illustration-download-in-svg-png-gif-file-formats--not-seach-available-nothing-error-state-pack-seo-web-illustrations-2133696.png?f=webp"
+            alt="img"
+          />
+          <h2>Feed is empty</h2>
+        </div>
+      </div>
+    );
+
   return (
     <div className="feed">
       <div className="feed-main-1">
-        {feed && feed.map((data) => <UserCard data={data} key={data._id} />)}
+        {/* {feed && feed.map((data) => <UserCard data={data} key={data._id} />)} */}
+        {feed && <UserCard data={feed[0]} />}
       </div>
     </div>
   );
