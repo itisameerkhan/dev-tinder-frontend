@@ -71,7 +71,6 @@ const Login = () => {
   const handleSignup = async () => {
     try {
       setIsLoading(true);
-      console.log(user);
 
       const res = await axios.post(
         BASE_URL + "/api/user/new",
