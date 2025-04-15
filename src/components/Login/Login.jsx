@@ -70,7 +70,7 @@ const Login = () => {
 
   const handleSignup = async () => {
     try {
-      setIsLoading(true);
+      setIsLoading(true); 
 
       const res = await axios.post(
         BASE_URL + "/api/user/new",
